@@ -25,7 +25,7 @@ class OrderSerializer(serializers.ModelSerializer):
         phones = re.findall(r'[0-9]?\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})', phone_string)
         phone_string = re.sub(r'[0-9]?\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})', '', phone_string)
         home_phones = [('495',) + numbers for numbers in
-                       re.findall(r'[^\d]([0-9]{3})([ .-]?)([0-9]{4})\b', phone_string)]
+                       re.findall(r'[^\d]?([0-9]{3})([ .-]?)([0-9]{4})\b', phone_string)]
         phones.extend(home_phones)
         phones = [''.join(('8',) + number) for number in phones]
         phones = [re.sub(r'[ .-]', '', number) for number in phones]
