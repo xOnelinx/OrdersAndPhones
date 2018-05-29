@@ -18,6 +18,30 @@ class OrderSerializerTestCase(TestCase):
                                            code='invalid')]},
                          msg=serializer.errors)
 
+    def test_serializer_one_home_phone(self):
+        """ Serializer should validate and parse one home phone numbers """
+        data = {'phones': '356-9877'}
+        serializer = OrderSerializer(data=data)
+        self.assertEqual(serializer.is_valid(), True)
+        self.assertEqual(serializer.validated_data['phones'], ['84953569877'],
+                         msg=serializer.validated_data)
+
+    def test_serializer_one_mobile_phone(self):
+        """ Serializer should validate and parse one phone numbers """
+        data = {'phones': '+79788222521'}
+        serializer = OrderSerializer(data=data)
+        self.assertEqual(serializer.is_valid(), True)
+        self.assertEqual(serializer.validated_data['phones'], ['89788222521'],
+                         msg=serializer.validated_data)
+
+    def test_serializer_one_mobile_phone_2(self):
+        """ Serializer should validate and parse one phone numbers with ()"""
+        data = {'phones': '+7(978)8222521'}
+        serializer = OrderSerializer(data=data)
+        self.assertEqual(serializer.is_valid(), True)
+        self.assertEqual(serializer.validated_data['phones'], ['89788222521'],
+                         msg=serializer.validated_data)
+
     def test_serializer(self):
         """ Serializer should validate and parse all phone numbers """
         data = {'phones': 'личный+79788222521 рабочий(123) 456 7899, ljvfiybq:4567899 рабочий2:356-9877, 765-123-1234'}
